@@ -18,11 +18,31 @@ typedef struct Node {
 } Node;
 
 Node *rot_ll (Node *node) {
-    return NULL;
+    Node *node_l = node->left;
+    Node *node_lr = node_l->right;
+    
+    node_l->right = node;
+    node->left = node_lr;
+    node->height = height(node);
+    node_l->height = height(node_l);
+    
+    return node_l;
 };
 
 Node *rot_lr (Node *node) {
-    return NULL;
+    Node *node_l = node->left;
+    Node *node_lr = node_l->right;
+    
+    node_l->right = node_lr->left;
+    node->left = node_lr->right;
+    node_lr->left = node_l;
+    node_lr->right = node;
+    
+    node_l->height = height(node_l);
+    node->height = height(node);
+    node_lr->height = height(node_lr);
+    
+    return node_lr;
 };
 
 Node *rot_rl (Node *node) {
