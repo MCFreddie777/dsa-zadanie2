@@ -7,8 +7,8 @@
 
 #define left_height(node) (node->left ? node->left->height : 0)
 #define right_height(node) (node->right ? node->right->height : 0)
-#define balance(node) (left_height(node) - right_height(node))
 #define height(node) ((right_height(node) > left_height(node) ? right_height(node) : left_height(node))+1)
+#define balance(node) (left_height(node) - right_height(node))
 
 typedef struct Node {
     struct Node *left;
@@ -53,7 +53,13 @@ Node *rot_rr (Node *node) {
     return NULL;
 };
 
-
+/**
+ * Recursive function to insert data into the BST
+ *
+ * @param node the root node of a subtree
+ * @param data The value that should be inserted into the right place
+ * @return whole subtree with @param data inserted
+ */
 Node *insert (Node *node, int data) {
     
     // Inserting a new element
@@ -96,11 +102,20 @@ Node *insert (Node *node, int data) {
 
 void search (Node *tree, int data) {};
 
+void inorderTraversal (Node *node) {
+    if (node) {
+        inorderTraversal(node->left);
+        printf("%d ", node->data);
+        inorderTraversal(node->right);
+    }
+}
+
 void free_node (Node *node) {
-    if (!node) return;
-    free_node(node->left);
-    free_node(node->right);
-    free(node);
+    if (node) {
+        free_node(node->left);
+        free_node(node->right);
+        free(node);
+    }
 }
 
 int main () {
@@ -110,6 +125,7 @@ int main () {
     tree = insert(tree, 10);
     tree = insert(tree, 20);
     
+    inorderTraversal(tree);
     free_node(tree);
     return 0;
 }
