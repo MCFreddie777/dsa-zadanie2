@@ -100,7 +100,11 @@ Node *insert (Node *node, int data) {
     return node;
 };
 
-void search (Node *tree, int data) {};
+Node * search (Node *tree, int data) {
+    if (tree == NULL) return NULL;
+    if (tree->data == data) return tree;
+    return search(data < tree->data ? tree->left : tree->right, data);
+};
 
 void inorderTraversal (Node *node) {
     if (node) {
@@ -118,7 +122,22 @@ void free_node (Node *node) {
     }
 }
 
+void test() {
+    Node * tree = NULL;
+    
+    tree = insert(tree, 50);
+    tree = insert(tree, 10);
+    tree = insert(tree, 20);
+    tree = insert(tree, 20);
+
+    if (search(tree, 80) != NULL) { printf("80 does not exist in the tree!"); exit(1); };
+    if (search(tree, 50) == NULL) { printf("node not found for 50!"); exit(1); };
+    if (search(tree, 10)->data != 10) { printf("incorrect node returned for 10!"); exit(1); };    
+}
+
 int main () {
+    test();
+
     Node *tree = NULL;
     
     tree = insert(tree, 50);
