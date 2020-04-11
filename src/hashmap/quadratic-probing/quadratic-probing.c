@@ -34,19 +34,25 @@ int search (const int table[], int key) {
     int index = hash(key);
     int i = 0;
     
-    while (table[(index + i * i) % SIZE] != key)
+    while (table[(index + i * i) % SIZE] != key) {
+        if (table[(index + i * i) % SIZE] == 0)
+            return 0;
         i++;
+    }
+    
     return (index + i * i) % SIZE;
 }
 
 int main () {
+    // TODO (fgic): Implement dynamic hashmap size
+    
     int table[SIZE] = {0};
     
-    insert(table, 12);
-    insert(table, 25);
+    insert(table, 76);
+    insert(table, 93);
+    insert(table, 40);
     insert(table, 35);
-    insert(table, 55);
-    insert(table, 26);
+    insert(table, 47);
     
     printf("Key of 55 found at %d\n", search(table, 55));
     
