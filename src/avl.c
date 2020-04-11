@@ -129,6 +129,19 @@ Node *insert (Node *node, int data) {
     return node;
 };
 
+/**
+ * Function that searches in the given BST for the given data
+ *
+ * @param tree The BST to search through
+ * @param data The data we're trying to find
+ * @return
+ */
+Node *search (Node *tree, int data) {
+    if (tree == NULL) return NULL;
+    if (tree->data == data) return tree;
+    return search(data < tree->data ? tree->left : tree->right, data);
+};
+
 void free_node (Node *node) {
     if (!node) return;
     free_node(node->left);
