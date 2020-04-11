@@ -1,5 +1,5 @@
 /*
- * Source: Programiz.com
+ * This algorithm was acquired from Programiz.com
  * https://www.programiz.com/dsa/insertion-in-a-red-black-tree
  */
 
