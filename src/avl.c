@@ -7,8 +7,8 @@
 
 #define left_height(node) (node->left ? node->left->height : 0)
 #define right_height(node) (node->right ? node->right->height : 0)
-#define balance(node) (left_height(node) - right_height(node))
 #define height(node) ((right_height(node) > left_height(node) ? right_height(node) : left_height(node))+1)
+#define balance(node) (left_height(node) - right_height(node))
 
 typedef struct Node {
     struct Node *left;
@@ -16,6 +16,13 @@ typedef struct Node {
     int data;
     int height;
 } Node;
+
+/**
+ * Rotation functions inspired by
+ * https://www.youtube.com/watch?v=jDM6_TnYIqE
+ * Named by the location of the imbalance in the tree
+ * (e.g. LL == right rotation, the imbalance is in left child of left subtree etc..)
+ */
 
 Node *rot_ll (Node *node) {
     Node *node_l = node->left;
@@ -29,30 +36,51 @@ Node *rot_ll (Node *node) {
     return node_l;
 };
 
+Node *rot_rr (Node *node) {
+    Node *node_r = node->right;
+    Node *node_rl = node_r->left;
+    
+    node_r->left = node;
+    node->right = node_rl;
+    node->height = height(node);
+    node_r->height = height(node_r);
+    
+    return node_r;
+};
+
 Node *rot_lr (Node *node) {
     Node *node_l = node->left;
     Node *node_lr = node_l->right;
     
-    node_l->right = node_lr->left;
     node->left = node_lr->right;
+    node_l->right = node_lr->left;
+    
     node_lr->left = node_l;
     node_lr->right = node;
     
-    node_l->height = height(node_l);
     node->height = height(node);
+    node_l->height = height(node_l);
     node_lr->height = height(node_lr);
     
     return node_lr;
 };
 
 Node *rot_rl (Node *node) {
-    return NULL;
+    Node *node_r = node->right;
+    Node *node_rl = node_r->left;
+    
+    node_r->left = node_rl->right;
+    node->right = node_rl->left;
+    
+    node_rl->left = node;
+    node_rl->right = node_r;
+    
+    node->height = height(node);
+    node_r->height = height(node_r);
+    node_rl->height = height(node_rl);
+    
+    return node_rl;
 };
-
-Node *rot_rr (Node *node) {
-    return NULL;
-};
-
 
 Node *insert (Node *node, int data) {
     
@@ -94,8 +122,6 @@ Node *insert (Node *node, int data) {
     return node;
 };
 
-void search (Node *tree, int data) {};
-
 void free_node (Node *node) {
     if (!node) return;
     free_node(node->left);
@@ -104,13 +130,6 @@ void free_node (Node *node) {
 }
 
 int main () {
-    Node *tree = NULL;
-    
-    tree = insert(tree, 50);
-    tree = insert(tree, 10);
-    tree = insert(tree, 20);
-    
-    free_node(tree);
     return 0;
 }
 
