@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define left_height(node) (node->left ? node->left->height : 0)
 #define right_height(node) (node->right ? node->right->height : 0)
@@ -163,7 +164,7 @@ void free_node (Node *node) {
     }
 }
 
-void test () {
+int main () {
     Node *tree = NULL;
     
     tree = insert(tree, 50);
@@ -172,63 +173,7 @@ void test () {
     tree = insert(tree, 20);
     
     free_node(tree);
-}
-
-void test_ll () {
-    Node *tree = NULL;
     
-    tree = insert(tree, 100);
-    tree = insert(tree, 150);
-    tree = insert(tree, 50);
-    tree = insert(tree, 25);
-    tree = insert(tree, 75);
-    tree = insert(tree, 12);
-    
-    free_node(tree);
-}
-
-void test_rr () {
-    Node *tree = NULL;
-    
-    tree = insert(tree, 67);
-    tree = insert(tree, 39);
-    tree = insert(tree, 85);
-    tree = insert(tree, 90);
-    tree = insert(tree, 100);
-    
-    free_node(tree);
-}
-
-void test_lr () {
-    Node *tree = NULL;
-    
-    tree = insert(tree, 78);
-    tree = insert(tree, 90);
-    tree = insert(tree, 67);
-    tree = insert(tree, 50);
-    tree = insert(tree, 75);
-    tree = insert(tree, 70);
-    free_node(tree);
-}
-
-void test_rl () {
-    Node *tree = NULL;
-    
-    tree = insert(tree, 90);
-    tree = insert(tree, 68);
-    tree = insert(tree, 105);
-    tree = insert(tree, 95);
-    tree = insert(tree, 110);
-    tree = insert(tree, 92);
-    free_node(tree);
-}
-
-int main () {
-    test();
-    test_ll();
-    test_lr();
-    test_rl();
-    test_rr();
     return 0;
 }
 
