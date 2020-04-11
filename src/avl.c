@@ -82,6 +82,13 @@ Node *rot_rl (Node *node) {
     return node_rl;
 };
 
+/**
+ * Recursive function to insert data into the BST
+ *
+ * @param node the root node of a subtree
+ * @param data The value that should be inserted into the right place
+ * @return whole subtree with @param data inserted
+ */
 Node *insert (Node *node, int data) {
     
     // Inserting a new element
@@ -113,9 +120,9 @@ Node *insert (Node *node, int data) {
             return rot_lr(node);
     }
     if (balance(node) == -2) {
-        if (balance(node->left) == 1)
+        if (balance(node->right) == 1)
             return rot_rl(node);
-        else if (balance(node->left) == -1)
+        else if (balance(node->right) == -1)
             return rot_rr(node);
     }
     
