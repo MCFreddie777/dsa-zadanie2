@@ -142,11 +142,25 @@ Node *search (Node *tree, int data) {
     return search(data < tree->data ? tree->left : tree->right, data);
 };
 
+/**
+ * Pretty print function for printing the BST
+ *
+ * @param node The tree we're gonna print out
+ */
+void inorderTraversal (Node *node) {
+    if (node) {
+        inorderTraversal(node->left);
+        printf("%d (h:%d) (bf: %d)\n", node->data, height(node), balance(node));
+        inorderTraversal(node->right);
+    }
+}
+
 void free_node (Node *node) {
-    if (!node) return;
-    free_node(node->left);
-    free_node(node->right);
-    free(node);
+    if (node) {
+        free_node(node->left);
+        free_node(node->right);
+        free(node);
+    }
 }
 
 int main () {
