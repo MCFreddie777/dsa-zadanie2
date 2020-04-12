@@ -31,6 +31,11 @@ HashTable *new (int size) {
     return temp;
 }
 
+void free_hashtable (HashTable *hashTable) {
+    free(hashTable->table);
+    free(hashTable);
+}
+
 /**
  * Create a new hashtable with double the size
  * and rehash the old keys into the new one
@@ -45,7 +50,7 @@ HashTable *rehash (HashTable *hashTable) {
         if (hashTable->table[i] != 0)
             insert(&temp, hashTable->table[i]);
     
-    free(hashTable);
+    free_hashtable(hashTable);
     return temp;
 }
 
@@ -128,6 +133,7 @@ int main () {
     find = 23;
     printf("Key of %d found at %d\n", find, search(hashTable, find));
     
+    free_hashtable(hashTable);
     return 0;
 }
 
