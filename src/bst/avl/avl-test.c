@@ -173,18 +173,91 @@ void test_rl () {
     free_node(tree);
 }
 
-int main () {
-    float startTime = (float) clock() / CLOCKS_PER_SEC;
+void height_test () {
+    Node *tree = NULL;
+    
+    tree = insert(tree, 2);
+    tree = insert(tree, 1);
+    tree = insert(tree, 4);
+    tree = insert(tree, 5);
+    tree = insert(tree, 9);
+    tree = insert(tree, 3);
+    tree = insert(tree, 6);
+    tree = insert(tree, 7);
+    
+    should(tree, "exist", 5);
+    should(tree, "exist", 3);
+    should(tree, "not.exist", 25);
+    
+    should(search(tree, 4), "have.height", 4);
+    should(search(tree, 2), "have.height", 2);
+    should(search(tree, 6), "have.height", 3);
+    should(search(tree, 1), "have.height", 1);
+    should(search(tree, 3), "have.height", 1);
+    should(search(tree, 5), "have.height", 1);
+    should(search(tree, 9), "have.height", 2);
+    should(search(tree, 7), "have.height", 1);
+    
+    print(tree);
+    free_node(tree);
+}
 
-//    test();
-//    test_ll();
-//    test_rr();
-//    test_lr();
-    test_rl();
+void get_time_test () {
+    Node *tree = NULL;
+    
+    tree = insert(tree, 2);
+    tree = insert(tree, 1);
+    tree = insert(tree, 4);
+    tree = insert(tree, 5);
+    tree = insert(tree, 9);
+    tree = insert(tree, 3);
+    tree = insert(tree, 6);
+    tree = insert(tree, 7);
+    
+    float startTime = (float) clock() / CLOCKS_PER_SEC;
+    
+    printf("%d\n", search(tree, 6)->data);
     
     float endTime = (float) clock() / CLOCKS_PER_SEC;
     float timeElapsed = endTime - startTime;
-    printf("Success. (%fs)\n", timeElapsed);
+    printf("(%fs)\n", timeElapsed);
+    
+}
+
+void insert_time_test () {
+    Node *tree = NULL;
+    
+    float startTime = (float) clock() / CLOCKS_PER_SEC;
+    for (int i = 0; i < 10000; i++) {
+        tree = insert(tree, i);
+    }
+    float endTime = (float) clock() / CLOCKS_PER_SEC;
+    
+    float timeElapsed = endTime - startTime;
+    printf("Insertion time: (%fs)\n", timeElapsed);
+    free_node(tree);
+}
+
+int main () {
+    
+    // Tests 1-5
+    /*
+      float startTime = (float) clock() / CLOCKS_PER_SEC;
+  
+  //  test();
+  //  test_ll();
+  //  test_rr();
+  //  test_lr();
+      test_rl();
+      
+      float endTime = (float) clock() / CLOCKS_PER_SEC;
+      float timeElapsed = endTime - startTime;
+      printf("Success. (%fs)\n", timeElapsed);
+      */
+
+//    height_test();
+//    get_time_test();
+    insert_time_test();
     
     return 0;
 }

@@ -119,12 +119,36 @@ void insertion (int data) {
     root->color = BLACK;
 }
 
-void inorderTraversal (struct rbNode *node) {
+/**
+ * Function that searches in the given BST for the given data
+ *
+ * @param tree The BST to search through
+ * @param data The data we're trying to find
+ * @return
+ */
+struct rbNode *search (struct rbNode *tree, int data) {
+    if (tree == NULL) return NULL;
+    if (tree->data == data) return tree;
+    return search(data < tree->data ? tree->link[0] : tree->link[1], data);
+};
+
+void inorderTraversal (struct rbNode *node, int *nodes) {
     if (node) {
-        inorderTraversal(node->link[0]);
-        printf("%d ", node->data);
-        inorderTraversal(node->link[1]);
+        (*nodes)++;
+        inorderTraversal(node->link[0], nodes);
+        printf("%d (color: %s)\n", node->data, node->color == 0 ? "RED" : "BLACK");
+        inorderTraversal(node->link[1], nodes);
     }
+}
+
+int height (struct rbNode *node) {
+    if (node) {
+        int l_height = height(node->link[0]);
+        int r_height = height(node->link[1]);
+        
+        return (l_height > r_height ? l_height + 1 : r_height + 1);
+    }
+    else return 0;
 }
 
 void free_node (struct rbNode *node) {
@@ -135,14 +159,10 @@ void free_node (struct rbNode *node) {
     }
 }
 
-int main () {
-    insertion(50);
-    insertion(10);
-    insertion(20);
-    
-    inorderTraversal(root);
-    free_node(root);
-    
-    return 0;
+void print (struct rbNode *node) {
+    int nodes = 0;
+    inorderTraversal(node, &nodes);
+    printf("Height: %d\n", height(node));
+    printf("Nodes: %d\n", nodes);
 }
 
