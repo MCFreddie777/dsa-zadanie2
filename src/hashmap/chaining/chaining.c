@@ -73,26 +73,3 @@ void print () {
         printf("NULL\n");
     }
 }
-
-int main () {
-    //init array of list to NULL
-    init();
-    
-    insert(7);
-    insert(0);
-    insert(3);
-    insert(10);
-    insert(4);
-    insert(5);
-    
-    print();
-    
-    printf("Searching element 10\n");
-    
-    if (search(10))
-        printf("Search Found\n");
-    else
-        printf("Search Not Found\n");
-    
-    return 0;
-}

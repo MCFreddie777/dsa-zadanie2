@@ -116,24 +116,8 @@ int search (HashTable *hashTable, int value) {
     return (index + i * i) % hashTable->size;
 }
 
-int main () {
-    HashTable *hashTable = new(10);
-    
-    insert(&hashTable, 76);
-    insert(&hashTable, 56);
-    insert(&hashTable, 93);
-    insert(&hashTable, 40);
-    insert(&hashTable, 35);
-    insert(&hashTable, 47);
-    insert(&hashTable, 57);
-    insert(&hashTable, 23);
-    
-    int find = 47;
-    printf("Key of %d found at %d\n", find, search(hashTable, find));
-    find = 23;
-    printf("Key of %d found at %d\n", find, search(hashTable, find));
-    
-    free_hashtable(hashTable);
-    return 0;
+void print (HashTable *table) {
+    for (int i = 0; i < table->size; i++)
+        printf("[%d]: %d\n", i, table->table[i]);
 }
 
