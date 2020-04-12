@@ -107,8 +107,9 @@ Node *insert (Node *node, int data) {
     // Recursively insert left or right depending on value of data
     if (data < node->data)
         node->left = insert(node->left, data);
-    else
+    else if (data > node->data)
         node->right = insert(node->right, data);
+    else return node;
     
     // Update the height - maximum height of its children increased by 1
     node->height = height(node);
@@ -148,12 +149,20 @@ Node *search (Node *tree, int data) {
  *
  * @param node The tree we're gonna print out
  */
-void inorderTraversal (Node *node) {
+void inorderTraversal (Node *node, int *nodes) {
     if (node) {
-        inorderTraversal(node->left);
-        printf("%d (h:%d) (bf: %d)\n", node->data, height(node), balance(node));
-        inorderTraversal(node->right);
+        (*nodes)++;
+        inorderTraversal(node->left, nodes);
+        printf("%d (height: %d, balance: %d)\n", node->data, height(node), balance(node));
+        inorderTraversal(node->right, nodes);
     }
+}
+
+void print (Node *node) {
+    int nodes = 0;
+    inorderTraversal(node, &nodes);
+    printf("Height: %d\n", height(node));
+    printf("Nodes: %d\n", nodes);
 }
 
 void free_node (Node *node) {
@@ -162,18 +171,5 @@ void free_node (Node *node) {
         free_node(node->right);
         free(node);
     }
-}
-
-int main () {
-    Node *tree = NULL;
-    
-    tree = insert(tree, 50);
-    tree = insert(tree, 10);
-    tree = insert(tree, 20);
-    tree = insert(tree, 20);
-    
-    free_node(tree);
-    
-    return 0;
-}
+};
 
